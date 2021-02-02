@@ -20,3 +20,4 @@ why not OCR to extract text and apply NLP techniques: _Low quality scans resulte
 
 
 # Method 2: Direct Classification?
+placeholder
