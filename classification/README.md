@@ -1,4 +1,6 @@
-# Method 1: Scanned document classification: 
+# Scanned document classification: 
+
+## Method 1: image classification with inter and intra domain 
 https://github.com/arpan65/Scanned-document-classification-using-deep-learning
 
 **Data**: RVL-CDIP (Ryerson Vision Lab Complex Document Information Processing) data set which consists of 400,000 grayscale images in 16 classes, with 25,000 images per class. There are 320,000 training images, 40,000 validation images, and 40,000 test images. The images are sized so their largest dimension does not exceed 1000 pixels. The size of this data set is more than 200 GB. Address is rvl-cdip.tar
@@ -19,5 +21,10 @@ why not OCR to extract text and apply NLP techniques: _Low quality scans resulte
 
 
 
-# Method 2: Direct Classification?
+## Method 2: image classification with localization
 placeholder
+
+
+## Method 3: image object detection + empirical rules
+placeholder
+
