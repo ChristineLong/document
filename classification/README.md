@@ -21,10 +21,12 @@ why not OCR to extract text and apply NLP techniques: _Low quality scans resulte
 
 
 
-## Method 2: image classification with localization
+## Method 2: multi-modal Transformer model with document text + layout + image information 
 placeholder
 
-
 ## Method 3: image object detection + empirical rules
+placeholder
+
+## Method 4: image classification with localization
 placeholder
 
