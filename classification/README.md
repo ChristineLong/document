@@ -3,7 +3,7 @@
 ## Method 1: image classification with inter and intra domain 
 https://github.com/arpan65/Scanned-document-classification-using-deep-learning
 
-**Data**: RVL-CDIP (Ryerson Vision Lab Complex Document Information Processing) data set which consists of 400,000 grayscale images in 16 classes, with 25,000 images per class. There are 320,000 training images, 40,000 validation images, and 40,000 test images. The images are sized so their largest dimension does not exceed 1000 pixels. The size of this data set is more than 200 GB. Address is rvl-cdip.tar
+**Data**: [RVL-CDIP (Ryerson Vision Lab Complex Document Information Processing) data set](https://www.cs.cmu.edu/~aharley/rvl-cdip/) which consists of 400,000 grayscale images in 16 classes, with 25,000 images per class. There are 320,000 training images, 40,000 validation images, and 40,000 test images. The images are sized so their largest dimension does not exceed 1000 pixels. The size of this data set is more than 200 GB. Address is rvl-cdip.tar
 
 **Method**:
 1. Import image data with ImageDataGenerator (from tf.keras.preprocessing.image): N_generated_img = number of epochs * batch size * steps_per_epoch with the standard given in the method. Data augmentation is optional here due to little change to result.
