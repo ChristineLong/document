@@ -21,8 +21,24 @@ why not OCR to extract text and apply NLP techniques: _Low quality scans resulte
 
 
 
-## Method 2: multi-modal Transformer model with document text + layout + image information 
-placeholder
+## Method 2: OCR + multi-modal Transformer model 
+
+[LayoutLM](https://arxiv.org/pdf/2012.14740v1.pdf): Multimodal (text + layout/format + image) pre-training for document AI. Need OCR before to extract text information. Use Pytorch.
+
+**Data**: 
+[FUNSD (Form Understanding in Noisy Scanned Documents)](https://guillaumejaume.github.io/FUNSD/download/) 199 fully annotated _forms_ with 31485 words，including semantic entities and relations. The official OCR annotation is directly used with the layout information
+[CORD (A Consolidated Receipt Dataset for Post-OCR Parsing)](https://github.com/clovaai/cord) over 11,000 Indonesian _receipts_ collected from shops and restaurants with full annotation. There are five superclass and 42 subclass labels
+[SROIE]
+[Kleister-NDA]
+[DocVQA]
+[RVL-CDIP (Ryerson Vision Lab Complex Document Information Processing) data set](https://www.cs.cmu.edu/~aharley/rvl-cdip/) as before
+
+**Method**:
+1. 
+2. 
+3
+**Evaluation**: 
+
 
 ## Method 3: image object detection + empirical rules
 placeholder
