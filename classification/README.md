@@ -23,22 +23,41 @@ why not OCR to extract text and apply NLP techniques: _Low quality scans resulte
 
 ## Method 2: OCR + multi-modal Transformer model 
 
-[LayoutLM](https://arxiv.org/pdf/2012.14740v1.pdf): Multimodal (text + layout/format + image) pre-training for document AI. Need OCR before to extract text information. Use Pytorch.
+[LayoutLM](https://arxiv.org/pdf/2012.14740v1.pdf): Multimodal (text + layout/format + image) pre-training for document AI. Need OCR before to extract text information. Use Pytorch (original code see here: https://github.com/microsoft/unilm/tree/master/layoutlm)
 
 **Data**: 
-[FUNSD (Form Understanding in Noisy Scanned Documents)](https://guillaumejaume.github.io/FUNSD/download/) 199 fully annotated _forms_ with 31485 words，including semantic entities and relations. The official OCR annotation is directly used with the layout information
-[CORD (A Consolidated Receipt Dataset for Post-OCR Parsing)](https://github.com/clovaai/cord) over 11,000 Indonesian _receipts_ collected from shops and restaurants with full annotation. There are five superclass and 42 subclass labels
-[SROIE]
-[Kleister-NDA]
-[DocVQA]
-[RVL-CDIP (Ryerson Vision Lab Complex Document Information Processing) data set](https://www.cs.cmu.edu/~aharley/rvl-cdip/) as before
++ [FUNSD (Form Understanding in Noisy Scanned Documents)](https://guillaumejaume.github.io/FUNSD/download/) 199 fully annotated _forms_ with 31485 words，including semantic entities and relations. The official OCR annotation is directly used with the layout information
++ [CORD (A Consolidated Receipt Dataset for Post-OCR Parsing)](https://github.com/clovaai/cord) over 11,000 Indonesian _receipts_ collected from shops and restaurants with full annotation. There are five superclass and 42 subclass labels
++ [SROIE]
++ [Kleister-NDA]
++ [DocVQA]
++ [RVL-CDIP (Ryerson Vision Lab Complex Document Information Processing) data set](https://www.cs.cmu.edu/~aharley/rvl-cdip/) as before
 
 **Method**:
-1. 
-2. 
-3
-**Evaluation**: 
+1. Embedding:
++ Text Embedding: embed the text extracted from doc
+The final text embedding is the sum of three embeddings: i-th text embedding **ti = TokEmb(wi) + PosEmb1D(i) + SegEmb(si)**, 0 ≤ i < L
+1) Token embedding: recognize text and serialize it in a reasonable reading order using off-theshelf OCR tools and PDF parsers, then use WordPiece to tokenize the text sequence and assign each token to a certain segment. Then add a [CLS] at the beginning of the token sequence and a [SEP] at the end of each text segment. The length of the text sequence is limited to ensure that the length of the final sequence is not greater than the maximum sequence length L. Extra [PAD] tokens are appended after the last [SEP] token to fill the gap if the token sequence is still shorter than L tokens. In this way, we get the input token sequence like _S = {[CLS], w1, w2, ..., [SEP], [PAD], [PAD], ...}, |S| = L_
+2) 1D positional embedding: the token index
+3) Segment embedding is used to distinguish different text segments. 
 
++ Visual Embedding: embed the scanned doc
+The final text embedding is the sum of three embeddings: i-th visual embedding is **vi = Proj(VisTokEmb(I)i) + PosEmb1D(i) + SegEmb([C])**, 0 ≤ i < W
+1) Token: a document page image I --> resized to 224 × 224 --> visual backbone of ResNeXt-FPN to generate output feature map --> average-pooling to width W * height H --> flattened into a visual embedding sequence of length WH --> linear projection layer applied to each visual token embedding in order to unify the dimensions. 
+2) ID positional embedding: Since the CNN-based visual backbone cannot capture the positional information, we also add a 1D positional embedding to these image token embeddings. The 1D positional embedding is shared with the text embedding layer. 
+3) Segment embedding, we attach all visual tokens to the visual segment [C]. 
+
++ Layout Embedding: embed the spatial layout information represented by token bounding boxes
+Normalize and discretize all coordinates to integers in the range [0, 1000], and use two embedding layers to embed x-axis features and y-axis features separately --> normalized bounding box of the i-th text/visual token is boxi = (x0, x1, y0, y1, w, h) --> the layout embedding layer: concatenated six bounding box features **li = Concat(PosEmb2Dx(x0, x1, w),PosEmb2Dy(y0, y1, h))**, 0 ≤ i < W H + L.
+(Note for dummy CLS, SEP and PAD, box = (0, 0, 0, 0, 0, 0))
+
+2. Multi-modal Encoder with Spatial-Aware Self-Attention Mechanism
+1) First layer of encoder: concatenates visual embeddings {v0, ..., vWH−1} and text embeddings {t0, ..., tL−1} to a unified sequence X and fuses spatial information by adding the layout embeddings to get the first layer input x(0): xi(0) = Xi + li, where X = {v0, ..., vWH−1, t0, ..., tL−1}
+2) Spatial-aware self-attention mechanism into the self-attention layers
+
+
+**Evaluation**: 
+Accuracy among different datasets, benchmarked with other commonly used models. forms not as good as receipt or varied doc.
 
 ## Method 3: image object detection + empirical rules
 placeholder
