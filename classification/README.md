@@ -8,10 +8,10 @@ https://github.com/arpan65/Scanned-document-classification-using-deep-learning
 **Method**:
 1. Import image data with ImageDataGenerator (from tf.keras.preprocessing.image): N_generated_img = number of epochs * batch size * steps_per_epoch with the standard given in the method. Data augmentation is optional here due to little change to result.
 2. Uses inter and intra domain transfer learning where an image is divided into four parts header, footer, left body and right body. 
-  + Common: A pretrained VGG16 model is first used to train over the whole images(inter domain) then this model is used to train the part of images(Intra domain).
-  + Here: Instead of intra domain transfer learning using VGG16, we trained two parallel models VGG16 and InceptionResNetV2 and used a stack of these as our final model. Our assumption was that because of the different architectures of these two models they will learn the different aspect of images and stacking them will result in good generalization.
+  - Common: A pretrained VGG16 model is first used to train over the whole images(inter domain) then this model is used to train the part of images(Intra domain).
+  - Here: Instead of intra domain transfer learning using VGG16, we trained two parallel models VGG16 and InceptionResNetV2 and used a stack of these as our final model. Our assumption was that because of the different architectures of these two models they will learn the different aspect of images and stacking them will result in good generalization.
 3. Tuning hyperparameters: For any CNN the hyper parameters are: learning rate, pooling size, network size, batch size, choice of optimizer, regularization, input size etc.
-  + learning rate: here use  ‘Cyclic Learning Rate’, which aims to train neural network such a way that the learning rate changes in a cyclic way for each training batch. It varies the learning rate within a threshold. The periodic higher learning rate helps to overcome if it stuck in the saddle point or local minima.
+  - learning rate: here use  ‘Cyclic Learning Rate’, which aims to train neural network such a way that the learning rate changes in a cyclic way for each training batch. It varies the learning rate within a threshold. The periodic higher learning rate helps to overcome if it stuck in the saddle point or local minima.
 
 **Evaluation**: Accuracy, micro average F1 score, confusion metric for all classes in heatmap (See repo). Training accuracy is 97% and test accuracy is 91.45%.
 
@@ -36,13 +36,13 @@ why not OCR to extract text and apply NLP techniques: _Low quality scans resulte
 **Method**:
 1. Embedding:
 
-  A) Text Embedding: embed the text extracted from doc
-  The final text embedding is the sum of three embeddings: i-th text embedding **ti = TokEmb(wi) + PosEmb1D(i) + SegEmb(si)**, 0 ≤ i < L
-    1) Token embedding: recognize text and serialize it in a reasonable reading order using off-theshelf OCR tools and PDF parsers, then use WordPiece to tokenize the text sequence and assign each token to a certain segment. Then add a [CLS] at the beginning of the token sequence and a [SEP] at the end of each text segment. The length of the text sequence is limited to ensure that the length of the final sequence is not greater than the maximum sequence length L. Extra [PAD] tokens are appended after the last [SEP] token to fill the gap if the token sequence is still shorter than L tokens. In this way, we get the input token sequence like _S = {[CLS], w1, w2, ..., [SEP], [PAD], [PAD], ...}, |S| = L_
-    2) 1D positional embedding: the token index
-    3) Segment embedding is used to distinguish different text segments. 
+(A) Text Embedding: embed the text extracted from doc
+The final text embedding is the sum of three embeddings: i-th text embedding **ti = TokEmb(wi) + PosEmb1D(i) + SegEmb(si)**, 0 ≤ i < L
+  (1) Token embedding: recognize text and serialize it in a reasonable reading order using off-theshelf OCR tools and PDF parsers, then use WordPiece to tokenize the text sequence and assign each token to a certain segment. Then add a [CLS] at the beginning of the token sequence and a [SEP] at the end of each text segment. The length of the text sequence is limited to ensure that the length of the final sequence is not greater than the maximum sequence length L. Extra [PAD] tokens are appended after the last [SEP] token to fill the gap if the token sequence is still shorter than L tokens. In this way, we get the input token sequence like _S = {[CLS], w1, w2, ..., [SEP], [PAD], [PAD], ...}, |S| = L_
+  (2) 1D positional embedding: the token index
+  (3) Segment embedding is used to distinguish different text segments. 
 
-B) Visual Embedding: embed the scanned doc
+(B) Visual Embedding: embed the scanned doc
 The final text embedding is the sum of three embeddings: i-th visual embedding is **vi = Proj(VisTokEmb(I)i) + PosEmb1D(i) + SegEmb([C])**, 0 ≤ i < W
 1) Token: a document page image I --> resized to 224 × 224 --> visual backbone of ResNeXt-FPN to generate output feature map --> average-pooling to width W * height H --> flattened into a visual embedding sequence of length WH --> linear projection layer applied to each visual token embedding in order to unify the dimensions. 
 2) ID positional embedding: Since the CNN-based visual backbone cannot capture the positional information, we also add a 1D positional embedding to these image token embeddings. The 1D positional embedding is shared with the text embedding layer. 
