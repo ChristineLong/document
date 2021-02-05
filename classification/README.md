@@ -35,12 +35,11 @@ why not OCR to extract text and apply NLP techniques: _Low quality scans resulte
 
 **Method**:
 1. Embedding:
-
 (A) Text Embedding: embed the text extracted from doc
 The final text embedding is the sum of three embeddings: i-th text embedding **ti = TokEmb(wi) + PosEmb1D(i) + SegEmb(si)**, 0 ≤ i < L
-  (1) Token embedding: recognize text and serialize it in a reasonable reading order using off-theshelf OCR tools and PDF parsers, then use WordPiece to tokenize the text sequence and assign each token to a certain segment. Then add a [CLS] at the beginning of the token sequence and a [SEP] at the end of each text segment. The length of the text sequence is limited to ensure that the length of the final sequence is not greater than the maximum sequence length L. Extra [PAD] tokens are appended after the last [SEP] token to fill the gap if the token sequence is still shorter than L tokens. In this way, we get the input token sequence like _S = {[CLS], w1, w2, ..., [SEP], [PAD], [PAD], ...}, |S| = L_
-  (2) 1D positional embedding: the token index
-  (3) Segment embedding is used to distinguish different text segments. 
+ 1) Token embedding: recognize text and serialize it in a reasonable reading order using off-theshelf OCR tools and PDF parsers, then use WordPiece to tokenize the text sequence and assign each token to a certain segment. Then add a [CLS] at the beginning of the token sequence and a [SEP] at the end of each text segment. The length of the text sequence is limited to ensure that the length of the final sequence is not greater than the maximum sequence length L. Extra [PAD] tokens are appended after the last [SEP] token to fill the gap if the token sequence is still shorter than L tokens. In this way, we get the input token sequence like _S = {[CLS], w1, w2, ..., [SEP], [PAD], [PAD], ...}, |S| = L_
+2) 1D positional embedding: the token index
+3) Segment embedding is used to distinguish different text segments. 
 
 (B) Visual Embedding: embed the scanned doc
 The final text embedding is the sum of three embeddings: i-th visual embedding is **vi = Proj(VisTokEmb(I)i) + PosEmb1D(i) + SegEmb([C])**, 0 ≤ i < W
