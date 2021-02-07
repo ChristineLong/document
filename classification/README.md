@@ -1,7 +1,12 @@
 # Scanned document classification: 
+1. Image classification with inter and intra domain: domain_classification.ipynb
+2. Multi-modal Transformer model: multi-modal Transformer_layoutlm.ipynb
+3. Text extraction + text classification: textClassifierHATT.py 
 
-## Solution 1: image classification with inter and intra domain 
-https://github.com/arpan65/Scanned-document-classification-using-deep-learning
+
+## Solution 1: Image classification with inter and intra domain
+
+**Source**: https://github.com/arpan65/Scanned-document-classification-using-deep-learning
 
 **Data**: [RVL-CDIP (Ryerson Vision Lab Complex Document Information Processing) data set](https://www.cs.cmu.edu/~aharley/rvl-cdip/) which consists of 400,000 grayscale images in 16 classes, with 25,000 images per class. There are 320,000 training images, 40,000 validation images, and 40,000 test images. The images are sized so their largest dimension does not exceed 1000 pixels. The size of this data set is more than 200 GB. Address is rvl-cdip.tar
 
@@ -21,9 +26,9 @@ why not OCR to extract text and apply NLP techniques: _Low quality scans resulte
 
 
 
-## Solution 2: multi-modal Transformer model 
+## Solution 2: Multi-modal Transformer model 
 
-[LayoutLM](https://arxiv.org/pdf/2012.14740v1.pdf): Multimodal (text + layout/format + image) pre-training for document AI. Need OCR before to extract text information. Use Pytorch ([original code](https://github.com/microsoft/unilm/tree/master/layoutlm) from Microsoft Research Team)
+**Source**: [LayoutLM publication](https://arxiv.org/pdf/2012.14740v1.pdf) uses a Multimodal (text + layout/format + image) pre-training for document AI. Need OCR before to extract text information. Use Pytorch ([original code](https://github.com/microsoft/unilm/tree/master/layoutlm) from Microsoft Research Team)
 
 **Data**: 
 + [FUNSD (Form Understanding in Noisy Scanned Documents)](https://guillaumejaume.github.io/FUNSD/download/) 199 fully annotated _forms_ with 31485 words，including semantic entities and relations. The official OCR annotation is directly used with the layout information
@@ -63,8 +68,21 @@ Accuracy among different datasets, benchmarked with other commonly used models. 
 
 
 ## Solution 3: text extraction + text classification
-placeholder
 
-## Solution 4: image classification with localization
-placeholder
+**Source**: [The code](https://github.com/richliao/textClassifier) is based on publication [Hierarchical Attention Networks for Document Classification](https://www.cs.cmu.edu/~./hovy/papers/16HLT-hierarchical-attention-networks.pdf). The code also has [a blog](https://richliao.github.io/supervised/classification/2016/12/26/textclassifier-HATN/) for detailed explanations.
 
+**Data**:
+
+**Method**:
+
+Part 1: GRU-based sequence encoder
+The GRU ([Gated Recurrent Unit](https://keras.io/api/layers/recurrent_layers/gru/)) uses a gating mechanism to track the state of sequences without using separate memory cells. There are two types of gates: the reset gate rt and the update gate zt. They together control how information is updated to the state.
+
+Part 2: Hierarchical Attention
+Hierarchical Attention includes Word Encoder, Word Attention, Sentence Encoder and Sentence Attention to achieve hierarchical modules.
+
+Part 3: softmax
+Softmax dense layer for final Document Classification.
+
+
+**Evalutation**: accuracy
