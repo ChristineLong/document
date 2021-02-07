@@ -1,10 +1,10 @@
-# document
+# Document
 Let AI learn documentations
 
-## Scanned documentation classification
+## Classification
 Use Deep Learning for scanned document classification
 
-## Text extraction from scanned documentation
+## Text extraction
 How to extract text from scanned document
 
 ## Text understanding
