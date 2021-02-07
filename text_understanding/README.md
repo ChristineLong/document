@@ -9,10 +9,10 @@
 ### Goal 3: credit rating
 
 
-## Q&A
+## Answer questions
 AI can answer questions based on documents
 
-## Knowledge graph
+## Knowledge graph vs. Database
 
 ## Named entity recognition (NER)
 Check for missing or wrong information
