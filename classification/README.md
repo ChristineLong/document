@@ -1,7 +1,7 @@
 # Scanned document classification: 
-1. Image classification with inter and intra domain: domain_classification.ipynb
-2. Multi-modal Transformer model: multi-modal Transformer_layoutlm.ipynb
-3. Text extraction + text classification: textClassifierHATT.py 
+1. **Image classification with inter and intra domain**: domain_classification.ipynb
+2. **Multi-modal Transformer model**: multi-modal Transformer_layoutlm.ipynb
+3. **Text extraction + text classification**: textClassifierHATT.py 
 
 
 ## Solution 1: Image classification with inter and intra domain
@@ -76,12 +76,15 @@ Accuracy among different datasets, benchmarked with other commonly used models. 
 **Method**:
 
 Part 1: GRU-based sequence encoder
+
 The GRU ([Gated Recurrent Unit](https://keras.io/api/layers/recurrent_layers/gru/)) uses a gating mechanism to track the state of sequences without using separate memory cells. There are two types of gates: the reset gate rt and the update gate zt. They together control how information is updated to the state.
 
 Part 2: Hierarchical Attention
+
 Hierarchical Attention includes Word Encoder, Word Attention, Sentence Encoder and Sentence Attention to achieve hierarchical modules.
 
-Part 3: softmax
+Part 3: Softmax
+
 Softmax dense layer for final Document Classification.
 
 
